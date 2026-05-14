@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIMELINE - Cricketer Biographies</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: Arial, sans-serif; background: #1D1D1D; color: #fff; }
+
+/* NAVBAR */
+.main { width: 100%; min-height: 100vh; background: linear-gradient(to top, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.5) 50%), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1600&q=80') center/cover no-repeat; }
+.navbar { max-width: 1200px; height: 75px; margin: auto; display: flex; align-items: center; padding: 0 20px; }
+.logo { color: #ff7200; font-size: 35px; font-family: Arial; flex: 0 0 200px; }
+.menu { flex: 1; }
+.menu ul { list-style: none; display: flex; gap: 28px; height: 70px; align-items: center; }
+.menu ul li a { text-decoration: none; color: #fff; font-family: Arial; font-weight: bold; font-size: 14px; transition: 0.4s ease-in-out; }
+.menu ul li a:hover { color: #ff7200; }
+.search { display: flex; align-items: center; margin-left: auto; }
+.srch { font-family: 'Times New Roman'; width: 200px; height: 40px; background: transparent; border: 1px solid #ff7200; color: #fff; border-right: none; font-size: 16px; padding: 10px; border-bottom-left-radius: 5px; border-top-left-radius: 5px; outline: none; }
+.srch::placeholder { color: #aaa; }
+.btn { width: 100px; height: 40px; background: #ff7200; border: 2px solid #ff7200; color: #fff; font-size: 15px; border-bottom-right-radius: 5px; border-top-right-radius: 5px; cursor: pointer; transition: 0.2s ease; }
+.btn:hover { color: #000; }
+
+/* HOME CONTENT */
+.content { max-width: 1200px; margin: auto; padding: 0 20px; position: relative; min-height: calc(100vh - 75px); display: flex; flex-direction: column; justify-content: center; }
+.content h1 { font-family: 'Times New Roman'; font-size: 50px; margin-top: 60px; letter-spacing: 2px; line-height: 1.2; }
+.content span { color: #ff7200; font-size: 65px; }
+.content .par { padding: 18px 0 25px 0; font-family: Arial; letter-spacing: 1.2px; line-height: 30px; color: #ddd; font-style: italic; }
+.cricketers-grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0 30px 0; }
+.cn { width: 160px; height: 40px; background: #ff7200; border: none; font-size: 16px; border-radius: 10px; cursor: pointer; transition: .4s ease; }
+.cn a { text-decoration: none; color: #000; font-weight: bold; transition: .3s ease; }
+.cn:hover { background-color: #fff; }
+
+/* LOGIN FORM */
+.form { width: 280px; background: rgba(0,0,0,0.85); border-radius: 10px; padding: 28px; position: absolute; top: 80px; right: 0; }
+.form h2 { font-family: sans-serif; text-align: center; color: #ff7200; font-size: 22px; background-color: #fff; border-radius: 10px; margin-bottom: 10px; padding: 8px; }
+.form input { width: 100%; height: 35px; background: transparent; border: none; border-bottom: 1px solid #ff7200; color: #fff; font-size: 15px; letter-spacing: 1px; margin-top: 24px; font-family: sans-serif; outline: none; }
+.form input::placeholder { color: #aaa; }
+.btnn { width: 100%; height: 40px; background: #ff7200; border: none; margin-top: 28px; font-size: 18px; border-radius: 10px; cursor: pointer; color: #fff; transition: 0.4s ease; }
+.btnn:hover { background: #fff; color: #ff7200; }
+.btnn a { text-decoration: none; color: #000; font-weight: bold; }
+.form .link { font-family: Arial; font-size: 15px; padding-top: 16px; text-align: center; }
+.form .link a { text-decoration: none; color: #ff7200; }
+.liw { padding-top: 12px; padding-bottom: 6px; text-align: center; font-size: 14px; color: #aaa; }
+.icons { display: flex; justify-content: center; gap: 5px; }
+.icons a { text-decoration: none; color: #fff; }
+.icons ion-icon { color: #fff; font-size: 28px; padding: 5px; transition: 0.3s ease; }
+.icons ion-icon:hover { color: #ff7200; }
+
+/* SECTION PAGES */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+
+/* CRICKETER HOMEPAGE */
+.cricketer-main { max-width: 1200px; margin: auto; padding: 40px 20px; }
+.cricketer-main h1 { font-family: 'Times New Roman'; font-size: 40px; letter-spacing: 2px; margin-bottom: 20px; }
+.cricketer-main .par { font-family: Arial; letter-spacing: 1.2px; line-height: 1.8; color: #ddd; margin-bottom: 30px; max-width: 700px; }
+.back-btn { background: transparent; border: 2px solid #ff7200; color: #ff7200; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-size: 15px; margin-right: 12px; transition: 0.3s; }
+.back-btn:hover { background: #ff7200; color: #000; }
+
+/* TIMELINE */
+.timeline-bg { background-color: #1D1D1D; min-height: 100vh; padding: 40px 0; }
+.timeline-header { text-align: center; padding: 30px 0 10px; }
+.timeline-header h2 { font-family: 'Times New Roman'; font-size: 36px; color: #ff7200; }
+.timeline-back { text-align: center; margin-bottom: 20px; }
+
+.entries { width: calc(100% - 80px); max-width: 800px; margin: auto; position: relative; padding: 40px 0; }
+.entries::before { content: ''; position: absolute; top: 0; left: 50%; bottom: 0; transform: translateX(-50%); width: 4px; background-color: #fff; }
+
+.entry { width: calc(50% - 60px); float: left; padding: 20px; clear: both; text-align: right; position: relative; margin-bottom: 30px; }
+.entry:nth-child(2n) { float: right; text-align: left; }
+.entry .title { font-size: 28px; margin-bottom: 10px; position: relative; color: #fff; font-weight: bold; font-family: 'Times New Roman'; }
+.entry .title::before { content: ''; position: absolute; width: 8px; height: 8px; border: 4px solid #ffffff; background-color: #1D1D1D; border-radius: 100%; top: 50%; transform: translateY(-50%); right: -73px; z-index: 1000; }
+.entry:nth-child(2n) .title::before { left: -63px; right: auto; }
+.entry .title.big::before { width: 24px; height: 24px; right: -81px; transform: translateY(-50%); }
+.entry:nth-child(2n) .title.big::before { left: -71px; right: auto; }
+.entry .body { color: #aaa; }
+.entry .body p { line-height: 1.6; font-size: 14px; }
+.clearfix::after { content: ''; display: table; clear: both; }
+
+/* NAV highlight active */
+.menu ul li a.active-nav { color: #ff7200; }
+
+@media (max-width: 768px) {
+  .form { position: static; width: 100%; margin-top: 30px; }
+  .content h1 { font-size: 32px; }
+  .content span { font-size: 42px; }
+  .navbar { flex-wrap: wrap; height: auto; padding: 12px; }
+  .menu ul { gap: 12px; flex-wrap: wrap; height: auto; }
+  .entry, .entry:nth-child(2n) { width: 100%; float: none; text-align: left; }
+  .entries::before { left: 10px; }
+  .entry .title::before, .entry:nth-child(2n) .title::before { left: -28px; right: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <div class="main">
+    <div class="navbar">
+      <div class="icon"><h2 class="logo">TIMELINE</h2></div>
+      <div class="menu">
+        <ul>
+          <li><a href="#" class="active-nav" onclick="showPage('home')">HOME</a></li>
+          <li><a href="#">ABOUT</a></li>
+          <li><a href="#">REFRENCE</a></li>
+          <li><a href="#">CONTACT</a></li>
+          <li><a href="#">FEEDBACK</a></li>
+        </ul>
+      </div>
+      <div class="search">
+        <input class="srch" type="search" placeholder="Search Google...">
+        <button class="btn" onclick="doSearch()">Search</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>Cricketer's Biography: Birth<br><span>Family and Education</span><br>Age</h1>
+      <p class="par">"Reading one book is like eating one potato chip." — Diane Duane</p>
+
+      <div class="cricketers-grid">
+        <button class="cn" onclick="showCricketer('dhoni')"><a>MS DHONI</a></button>
+        <button class="cn" onclick="showCricketer('kohli')"><a>VIRAT KOHLI</a></button>
+        <button class="cn" onclick="showCricketer('pant')"><a>RISHABH PANT</a></button>
+        <button class="cn"><a>GAMBHIR</a></button>
+        <button class="cn"><a>SIR JADEJA</a></button>
+        <button class="cn"><a>ROHIT SHARMA</a></button>
+        <button class="cn"><a>MD SIRAJ</a></button>
+        <button class="cn"><a>SURESH RAINA</a></button>
+      </div>
+
+      <div class="form">
+        <h2>Login Here</h2>
+        <input type="email" placeholder="Enter Email">
+        <input type="password" placeholder="Enter Password">
+        <button class="btnn"><a>Login</a></button>
+        <p class="link">Don't have an account?<br><a href="#">Sign up</a> here</p>
+        <p class="liw">Log in with</p>
+        <div class="icons">
+          <a href="https://fb.com" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="https://instagram.com" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a>
+          <a href="https://x.com" target="_blank"><ion-icon name="logo-twitter"></ion-icon></a>
+          <a href="https://accounts.google.com" target="_blank"><ion-icon name="logo-google"></ion-icon></a>
+          <a href="https://skype.com" target="_blank"><ion-icon name="logo-skype"></ion-icon></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MS DHONI HOMEPAGE -->
+<div id="page-dhoni" class="page">
+  <div style="background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1600&q=80') center/cover no-repeat; min-height:100vh;">
+    <div class="navbar">
+      <div class="icon"><h2 class="logo">TIMELINE</h2></div>
+      <div class="menu"><ul><li><a href="#" onclick="showPage('home')">HOME</a></li></ul></div>
+    </div>
+    <div class="cricketer-main">
+      <h1>MS Dhoni Biography: Birth<br><span style="color:#ff7200;font-size:55px;">Family and Education</span><br>Age</h1>
+      <p class="par">MS Dhoni was born on July 7, 1981, in Ranchi, Bihar (present-day Jharkhand) in a Hindu Rajput family to Pan Singh and Devki Devi. His paternal village is in the Lamgara block in Almora, Uttarakhand. His father, Pan Singh, moved from Uttarakhand to Ranchi and worked in junior management positions in MECON.</p>
+      <button class="back-btn" onclick="showPage('home')">← Back</button>
+      <button class="cn" onclick="showTimeline('dhoni')"><a>READ TIMELINE</a></button>
+    </div>
+  </div>
+</div>
+
+<!-- VIRAT KOHLI HOMEPAGE -->
+<div id="page-kohli" class="page">
+  <div style="background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1600&q=80') center/cover no-repeat; min-height:100vh;">
+    <div class="navbar">
+      <div class="icon"><h2 class="logo">TIMELINE</h2></div>
+      <div class="menu"><ul><li><a href="#" onclick="showPage('home')">HOME</a></li></ul></div>
+    </div>
+    <div class="cricketer-main">
+      <h1>Virat Kohli Biography: Birth<br><span style="color:#ff7200;font-size:55px;">Family and Education</span><br>Age</h1>
+      <p class="par">Virat Kohli was born on 5 November 1988 to Prem Kohli and Saroj Kohli in Delhi, India. His father was a criminal lawyer while his mother is a housewife. He was bred in Delhi's Uttam Nagar and attended Vishal Bharti Public School and Saviour Convent.</p>
+      <button class="back-btn" onclick="showPage('home')">← Back</button>
+      <button class="cn" onclick="showTimeline('kohli')"><a>READ TIMELINE</a></button>
+    </div>
+  </div>
+</div>
+
+<!-- RISHABH PANT HOMEPAGE -->
+<div id="page-pant" class="page">
+  <div style="background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1600&q=80') center/cover no-repeat; min-height:100vh;">
+    <div class="navbar">
+      <div class="icon"><h2 class="logo">TIMELINE</h2></div>
+      <div class="menu"><ul><li><a href="#" onclick="showPage('home')">HOME</a></li></ul></div>
+    </div>
+    <div class="cricketer-main">
+      <h1>Rishabh Pant Biography: Birth<br><span style="color:#ff7200;font-size:55px;">Family and Education</span><br>Age</h1>
+      <p class="par">Rishabh Pant's journey is a compelling tale of a young cricketer who rose to prominence through a combination of raw talent, resilience, and a fearless approach to the game. Born on October 4, 1997, in Haridwar, Uttarakhand, India, Rishabh Rajendra Pant displayed a penchant for cricket from an early age.</p>
+      <button class="back-btn" onclick="showPage('home')">← Back</button>
+      <button class="cn" onclick="showTimeline('pant')"><a>READ TIMELINE</a></button>
+    </div>
+  </div>
+</div>
+
+<!-- MS DHONI TIMELINE -->
+<div id="timeline-dhoni" class="page timeline-bg">
+  <div class="timeline-header"><h2>MS DHONI — Career Timeline</h2></div>
+  <div class="timeline-back"><button class="back-btn" onclick="showCricketer('dhoni')">← Back to Bio</button></div>
+  <div class="entries clearfix">
+    <div class="entry"><div class="title">BIRTH & FAMILY</div><div class="body"><p>MS Dhoni was born on July 7, 1981, in Ranchi, Bihar (present-day Jharkhand) in a Hindu Rajput family to Pan Singh and Devki Devi. His paternal village is in the Lamgara block in Almora, Uttarakhand. Dhoni has a sister and a brother — Jayanti Gupta and Narendra Singh Dhoni.</p></div></div>
+    <div class="entry"><div class="title">SCHOOLING</div><div class="body"><p>Dhoni did his schooling at DAV Jawahar Vidya Mandir, Ranchi, and excelled in badminton, football, and cricket. He played as a goalkeeper for his football team and for a local cricket club.</p></div></div>
+    <div class="entry"><div class="title big">1998</div><div class="body"><p>Dhoni was selected for the Central Coal Fields Limited (CCL) team. His excellent performance with CCL earned him a place in Bihar's Ranji Trophy squad.</p></div></div>
+    <div class="entry"><div class="title">2002–2003</div><div class="body"><p>Playing for Jharkhand in the Ranji Trophy and Deodhar Trophy, Dhoni gained recognition for his lower-order contributions and hard-hitting batting style.</p></div></div>
+    <div class="entry"><div class="title">2004</div><div class="body"><p>Selected for India A, Dhoni toured Zimbabwe and Kenya. He scored 362 runs in 6 innings at an average of 72.40, turning heads with his explosive batting and sharp glovework.</p></div></div>
+    <div class="entry"><div class="title big">2007</div><div class="body"><p>Named vice-captain for ODIs against South Africa and England. In September 2007, Dhoni was elected captain of the Indian T20 team and led India to win the inaugural ICC World Twenty20.</p></div></div>
+    <div class="entry"><div class="title">2009</div><div class="body"><p>Dhoni scored 124 off 107 balls vs Australia. He topped the ICC ODI Batsman rankings and took his first international wicket against West Indies in the Champions Trophy.</p></div></div>
+    <div class="entry"><div class="title">2011–2012</div><div class="body"><p>Led India to the 2011 Cricket World Cup title, finishing the final with an iconic six scoring 91* against Sri Lanka, winning Man of the Match. India became the first team to win the World Cup on home soil.</p></div></div>
+    <div class="entry"><div class="title">2013</div><div class="body"><p>India won the ICC Champions Trophy. Dhoni became the first and only captain in cricket history to win all three major ICC trophies — World T20, World Cup, and Champions Trophy.</p></div></div>
+    <div class="entry"><div class="title">2017</div><div class="body"><p>Stepped down as captain of the Indian limited-overs team. Was named wicketkeeper in the ICC 'Team of the Tournament' at the 2017 Champions Trophy.</p></div></div>
+    <div class="entry"><div class="title">2019</div><div class="body"><p>Selected for the 2019 Cricket World Cup. In the semi-final against New Zealand, Dhoni scored a half-century but was controversially run out at a crucial stage, ending India's campaign.</p></div></div>
+    <div class="entry"><div class="title">PERSONAL LIFE</div><div class="body"><p>Dhoni married Sakshi Singh Rawat on July 4, 2010. The couple has a daughter, Ziva, born on February 6, 2015. He is known for his calm demeanour both on and off the field.</p></div></div>
+    <div class="entry"><div class="title">PLAYING STYLE</div><div class="body"><p>A right-handed batsman and wicket-keeper, Dhoni is famous for his Helicopter Shot, his calm finishing under pressure, and lightning-quick stumpings. He holds the world record for most stumpings by a wicketkeeper.</p></div></div>
+    <div class="entry"><div class="title">AWARDS</div><div class="body"><p>Padma Bhushan (2018) • Rajiv Gandhi Khel Ratna • Padma Shri (2009) • ICC World Test XI (2009, 2010, 2013)</p></div></div>
+  </div>
+</div>
+
+<!-- VIRAT KOHLI TIMELINE -->
+<div id="timeline-kohli" class="page timeline-bg">
+  <div class="timeline-header"><h2>VIRAT KOHLI — Career Timeline</h2></div>
+  <div class="timeline-back"><button class="back-btn" onclick="showCricketer('kohli')">← Back to Bio</button></div>
+  <div class="entries clearfix">
+    <div class="entry"><div class="title">2002</div><div class="body"><p>Kohli made his debut with the Delhi Under-15 team in the 2002-03 Polly Umrigar Trophy, captaining the team for the next edition. He was later selected for the Delhi Under-17 team and finished as the highest run-scorer in the Vijay Merchant Trophy.</p></div></div>
+    <div class="entry"><div class="title">2008</div><div class="body"><p>A life-changing year: Kohli captained the Under-19 Cricket World Cup-winning team, was bought by RCB for $30,000 in the first IPL auction, and made his international debut for India.</p></div></div>
+    <div class="entry"><div class="title big">2010</div><div class="body"><p>With Tendulkar rested, Kohli played every match in the tri-nation ODI tournament in Bangladesh. His phenomenal performance earned praise from captain MS Dhoni.</p></div></div>
+    <div class="entry"><div class="title">2011</div><div class="body"><p>Kohli was part of the 2011 World Cup-winning team and became the first Indian batsman to score a century on World Cup debut.</p></div></div>
+    <div class="entry"><div class="title">2015</div><div class="body"><p>Kohli became the first Indian batsman to score a century against Pakistan in a World Cup match in 2015. He also became Test vice-captain around this period.</p></div></div>
+    <div class="entry"><div class="title big">FAMILY</div><div class="body"><p>Started dating Bollywood actress Anushka Sharma in 2013, earning the nickname "Virushka." The couple married in an intimate ceremony on December 11, 2017 in Florence, Italy, and welcomed a daughter named Vamika.</p></div></div>
+    <div class="entry"><div class="title">AWARDS</div><div class="body"><p>Arjuna Award (2013) • Padma Shri (2017) • Rajiv Gandhi Khel Ratna (2018) • ICC ODI Player of the Year (2012) • ICC Test Player of the Year (2018)</p></div></div>
+    <div class="entry"><div class="title">CAPTAINCY</div><div class="body"><p>India lost the 2021 ICC World Test Championship Final to New Zealand — Kohli's third defeat as captain in ICC knockouts. India also failed to reach the T20 World Cup 2021 semi-finals under his captaincy. He captained RCB for 8 IPL seasons but couldn't win a trophy.</p></div></div>
+  </div>
+</div>
+
+<!-- RISHABH PANT TIMELINE -->
+<div id="timeline-pant" class="page timeline-bg">
+  <div class="timeline-header"><h2>RISHABH PANT — Career Timeline</h2></div>
+  <div class="timeline-back"><button class="back-btn" onclick="showCricketer('pant')">← Back to Bio</button></div>
+  <div class="entries clearfix">
+    <div class="entry"><div class="title">BIRTH & FAMILY</div><div class="body"><p>Born on October 4, 1997, in Haridwar, Uttarakhand. His family moved to Roorkee and his father Rajendra Pant nurtured his cricketing passion. Pant trained at Sonnet Cricket Club in Delhi, where coaches spotted his enormous potential.</p></div></div>
+    <div class="entry"><div class="title">DOMESTIC CRICKET</div><div class="body"><p>His aggressive batting quickly made him a standout in domestic cricket. Representing Delhi, he announced himself with a blistering triple century in the Ranji Trophy against Maharashtra in 2016-17, earning him an India T20 call-up.</p></div></div>
+    <div class="entry"><div class="title big">IPL DEBUT</div><div class="body"><p>Pant's IPL journey began with the Delhi Daredevils (now Delhi Capitals) in 2016. His explosive batting and agile wicketkeeping made him indispensable, and he grew into one of the team's most important players.</p></div></div>
+    <div class="entry"><div class="title">INTERNATIONAL DEBUT</div><div class="body"><p>Made his T20I debut against England in 2017, followed by Test and ODI debuts. Despite critics pointing out wicketkeeping lapses, Pant showed rapid learning and continually refined his game.</p></div></div>
+    <div class="entry"><div class="title">TEST CRICKET</div><div class="body"><p>His defining moment came in the 2020-21 Border-Gavaskar Trophy in Australia. An unbeaten 89 at the Gabba helped India pull off a historic series win, silencing critics and cementing his legacy.</p></div></div>
+    <div class="entry"><div class="title big">RECORDS</div><div class="body"><p>Pant is the fastest Indian wicketkeeper to reach 1000 Test runs. His penchant for sixes and match-winning knocks have made him one of the most exciting young talents in world cricket.</p></div></div>
+    <div class="entry"><div class="title">BEYOND CRICKET</div><div class="body"><p>Off the field, Pant's amiable personality and social media presence have endeared him to millions of fans globally. He is known for his camaraderie and lighthearted spirit within the team.</p></div></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function showCricketer(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function showTimeline(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('timeline-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function doSearch() {
+  const q = document.getElementById('q') ? document.getElementById('q').value : document.querySelector('.srch').value;
+  if (q) window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank');
+}
+</script>
+</body>
+</html>
